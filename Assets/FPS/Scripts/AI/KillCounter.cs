@@ -12,6 +12,13 @@ public class KillCounter : MonoBehaviour
     void Start()
     {
         logger = FindObjectOfType<DataLogger>();
+        if (logger == null)
+        {
+            GameObject loggerObj = new GameObject("DataLogger");
+            logger = loggerObj.AddComponent<DataLogger>();
+            DontDestroyOnLoad(loggerObj);
+            Debug.Log("[KillCounter] DataLogger was not found in scene, so it was auto-created.");
+        }
     }
 
     void Awake()
