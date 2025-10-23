@@ -45,6 +45,17 @@ namespace Unity.FPS.AI
 
         public virtual void HandleTargetDetection(Actor actor, Collider[] selfColliders)
         {
+            if (actor == null)
+            {
+                Debug.LogWarning("DetectionModule.HandleTargetDetection called with null actor.");
+                return;
+            }
+
+            if (actor == null)
+            {
+                Debug.LogWarning("DetectionModule.HandleTargetDetection called with null actor.");
+                return;
+            }
             // Handle known target detection timeout
             if (KnownDetectedTarget && !IsSeeingTarget && (Time.time - TimeLastSeenTarget) > KnownTargetTimeout)
             {
@@ -57,6 +68,11 @@ namespace Unity.FPS.AI
             float closestSqrDistance = Mathf.Infinity;
             foreach (Actor otherActor in m_ActorsManager.Actors)
             {
+                if (otherActor == null)
+                {
+                    Debug.LogWarning("DetectionModule: Found null Actor in m_ActorsManager.Actors list.");
+                    continue;
+                }
                 if (otherActor.Affiliation != actor.Affiliation)
                 {
                     float sqrDistance = (otherActor.transform.position - DetectionSourcePoint.position).sqrMagnitude;

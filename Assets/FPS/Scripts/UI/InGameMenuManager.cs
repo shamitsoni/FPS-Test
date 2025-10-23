@@ -69,11 +69,26 @@ namespace Unity.FPS.UI
             m_CancelAction = InputSystem.actions.FindAction("UI/Cancel");
             m_NavigateAction = InputSystem.actions.FindAction("UI/Navigate");
             m_MenuAction = InputSystem.actions.FindAction("UI/Menu");
-            
-            m_SubmitAction.Enable();
-            m_CancelAction.Enable();
-            m_NavigateAction.Enable();
-            m_MenuAction.Enable();
+
+            if (m_SubmitAction == null)
+                Debug.LogWarning("Submit action not found!");
+            else
+                m_SubmitAction.Enable();
+
+            if (m_CancelAction == null)
+                Debug.LogWarning("Cancel action not found!");
+            else
+                m_CancelAction.Enable();
+
+            if (m_NavigateAction == null)
+                Debug.LogWarning("Navigate action not found!");
+            else
+                m_NavigateAction.Enable();
+
+            if (m_MenuAction == null)
+                Debug.LogWarning("Menu action not found!");
+            else
+                m_MenuAction.Enable();
         }
 
         void Update()
@@ -91,8 +106,8 @@ namespace Unity.FPS.UI
                 Cursor.visible = true;
             }
 
-            if (m_MenuAction.WasPressedThisFrame()
-                || (MenuRoot.activeSelf && m_CancelAction.WasPressedThisFrame()))
+            if ((m_MenuAction != null && m_MenuAction.WasPressedThisFrame())
+                || (MenuRoot.activeSelf && m_CancelAction != null && m_CancelAction.WasPressedThisFrame()))
             {
                 if (ControlImage.activeSelf)
                 {
@@ -104,9 +119,9 @@ namespace Unity.FPS.UI
 
             }
 
-            if (m_NavigateAction.ReadValue<Vector2>().y != 0)
+            if (m_NavigateAction != null && m_NavigateAction.ReadValue<Vector2>().y != 0)
             {
-                if (EventSystem.current.currentSelectedGameObject == null)
+                if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == null)
                 {
                     EventSystem.current.SetSelectedGameObject(null);
                     LookSensitivitySlider.Select();
