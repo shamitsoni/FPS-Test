@@ -7,6 +7,12 @@ public class KillCounter : MonoBehaviour
 
     public int killCount = 0;           // the number of kills
     public Text killText;               // UI text to show kills (set this in the Inspector)
+    private DataLogger logger;
+    
+    void Start()
+    {
+        logger = FindObjectOfType<DataLogger>();
+    }
 
     void Awake()
     {
@@ -21,6 +27,11 @@ public class KillCounter : MonoBehaviour
     {
         killCount++;
         Debug.Log("Kills: " + killCount);
+
+        if (logger != null)
+        {
+            logger.LogKill(killCount);
+        }
 
         // Update UI text if it's assigned
         if (killText != null)
