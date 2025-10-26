@@ -1,47 +1,50 @@
 using UnityEngine;
 using UnityEngine.UI; // needed for UI text
 
-public class KillCounter : MonoBehaviour
+namespace Unity.FPS.AI
 {
-    public static KillCounter Instance; // allows other scripts to access this one easily
-
-    public int killCount = 0;           // the number of kills
-    public Text killText;               // UI text to show kills (set this in the Inspector)
-    private DataLogger logger;
-    
-    void Start()
+    public class KillCounter : MonoBehaviour
     {
-        logger = FindObjectOfType<DataLogger>();
-        if (logger == null)
+        public static KillCounter Instance; // allows other scripts to access this one easily
+
+        public int killCount = 0;           // the number of kills
+        public Text killText;               // UI text to show kills (set this in the Inspector)
+        private DataLogger logger;
+        
+        void Start()
         {
-            GameObject loggerObj = new GameObject("DataLogger");
-            logger = loggerObj.AddComponent<DataLogger>();
-            DontDestroyOnLoad(loggerObj);
-            Debug.Log("[KillCounter] DataLogger was not found in scene, so it was auto-created.");
-        }
-    }
-
-    void Awake()
-    {
-        // This makes sure there’s only one KillCounter in the scene
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
-    }
-
-    public void AddKill()
-    {
-        killCount++;
-        Debug.Log("Kills: " + killCount);
-
-        if (logger != null)
-        {
-            logger.LogKill(killCount);
+            logger = FindObjectOfType<DataLogger>();
+            if (logger == null)
+            {
+                GameObject loggerObj = new GameObject("DataLogger");
+                logger = loggerObj.AddComponent<DataLogger>();
+                DontDestroyOnLoad(loggerObj);
+                Debug.Log("[KillCounter] DataLogger was not found in scene, so it was auto-created.");
+            }
         }
 
-        // Update UI text if it's assigned
-        if (killText != null)
-            killText.text = "Kills: " + killCount;
+        void Awake()
+        {
+            // This makes sure there’s only one KillCounter in the scene
+            if (Instance == null)
+                Instance = this;
+            else
+                Destroy(gameObject);
+        }
+
+        public void AddKill()
+        {
+            killCount++;
+            Debug.Log("Kills: " + killCount);
+
+            if (logger != null)
+            {
+                logger.LogKill(killCount);
+            }
+
+            // Update UI text if it's assigned
+            if (killText != null)
+                killText.text = "Kills: " + killCount;
+        }
     }
 }
