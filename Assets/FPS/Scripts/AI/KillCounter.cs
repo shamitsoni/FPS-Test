@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI; // needed for UI text
+using Unity.FPS.Logging;
 
 namespace Unity.FPS.AI
 {

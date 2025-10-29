@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.FPS.Logging; 
 
 namespace Unity.FPS.Gameplay
 {
@@ -11,6 +12,7 @@ namespace Unity.FPS.Gameplay
         public Text hitText;
 
         private int hitCount = 0;
+        private DataLogger logger; 
 
         void Awake()
         {
@@ -18,6 +20,18 @@ namespace Unity.FPS.Gameplay
                 Instance = this;
             else
                 Destroy(gameObject);
+        }
+
+        void Start()
+        {
+            logger = FindObjectOfType<DataLogger>();
+            if (logger == null)
+            {
+                GameObject loggerObj = new GameObject("DataLogger");
+                logger = loggerObj.AddComponent<DataLogger>();
+                DontDestroyOnLoad(loggerObj);
+                Debug.Log("[HitCounter] DataLogger was not found in scene, so it was auto-created.");
+            }
         }
 
         public void AddHit(GameObject shooter, GameObject target)
@@ -30,6 +44,9 @@ namespace Unity.FPS.Gameplay
 
                 if (hitText != null)
                     hitText.text = "Hits: " + hitCount;
+
+                if (logger != null)
+                    logger.LogHit(hitCount); // send to DataLogger
             }
         }
 
@@ -38,6 +55,9 @@ namespace Unity.FPS.Gameplay
             hitCount = 0;
             if (hitText != null)
                 hitText.text = "Hits: 0";
+
+            if (logger != null)
+                logger.LogHit(hitCount);
         }
     }
 }

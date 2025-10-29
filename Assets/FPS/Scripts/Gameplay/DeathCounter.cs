@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using Unity.FPS.AI;
+using Unity.FPS.Logging;
 
 namespace Unity.FPS.Gameplay
 {

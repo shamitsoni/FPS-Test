@@ -1,7 +1,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace Unity.FPS.AI
+namespace Unity.FPS.Logging
 {
     public class DataLogger : MonoBehaviour
     {
@@ -10,6 +10,9 @@ namespace Unity.FPS.AI
         private string logFilePath;
         int currentKills = 0;
         int currentDeaths = 0;
+        int currentShots = 0;
+        int currentHits = 0;         
+        float currentDamage = 0f;    
 
         void Awake()
         {
@@ -34,7 +37,7 @@ namespace Unity.FPS.AI
             logFilePath = Path.Combine(folderPath, $"GameSession_{timestamp}.csv");
 
             // Write header line (overwrite any existing file for this session)
-            File.WriteAllText(logFilePath, "Timestamp,Kills,Deaths\n");
+            File.WriteAllText(logFilePath, "Timestamp,Kills,Deaths,Shots,Hits,Damage\n"); // include Hits and Damage
             Debug.Log($"[DataLogger] Logging to: {logFilePath}");
         }
 
@@ -44,19 +47,40 @@ namespace Unity.FPS.AI
             // keep internal state in sync in case callers don't pass an absolute total
             currentKills = killCount;
             WriteFullRow();
-            Debug.Log($"[DataLogger] Stats logged: Kills={currentKills}, Deaths={currentDeaths}");
+            Debug.Log($"[DataLogger] Stats logged: Kills={currentKills}, Deaths={currentDeaths}, Shots={currentShots}, Hits={currentHits}, Damage={currentDamage:F2}");
         }
 
         public void LogDeath(int deathCount)
         {
             currentDeaths = deathCount;
             WriteFullRow();
-            Debug.Log($"[DataLogger] Stats logged: Kills={currentKills}, Deaths={currentDeaths}");
+            Debug.Log($"[DataLogger] Stats logged: Kills={currentKills}, Deaths={currentDeaths}, Shots={currentShots}, Hits={currentHits}, Damage={currentDamage:F2}");
+        }
+
+        public void LogShot(int shotCount)
+        {
+            currentShots = shotCount;
+            WriteFullRow();
+            Debug.Log($"[DataLogger] Stats logged: Kills={currentKills}, Deaths={currentDeaths}, Shots={currentShots}, Hits={currentHits}, Damage={currentDamage:F2}");
+        }
+
+        public void LogHit(int hitCount) 
+        {
+            currentHits = hitCount;
+            WriteFullRow();
+            Debug.Log($"[DataLogger] Stats logged: Kills={currentKills}, Deaths={currentDeaths}, Shots={currentShots}, Hits={currentHits}, Damage={currentDamage:F2}");
+        }
+
+        public void LogDamage(float totalDamage) 
+        {
+            currentDamage = totalDamage;
+            WriteFullRow();
+            Debug.Log($"[DataLogger] Stats logged: Kills={currentKills}, Deaths={currentDeaths}, Shots={currentShots}, Hits={currentHits}, Damage={currentDamage:F2}");
         }
 
         void WriteFullRow()
         {
-            string logEntry = $"{System.DateTime.Now:HH:mm:ss},{currentKills},{currentDeaths}\n";
+            string logEntry = $"{System.DateTime.Now:HH:mm:ss},{currentKills},{currentDeaths},{currentShots},{currentHits},{currentDamage:F2}\n";
             File.AppendAllText(logFilePath, logEntry);
         }
 
