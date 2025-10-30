@@ -73,7 +73,6 @@ namespace Unity.FPS.UI
             m_SubmitAction.Enable();
             m_CancelAction.Enable();
             m_NavigateAction.Enable();
-            m_MenuAction.Enable();
         }
 
         void Update()
@@ -91,9 +90,8 @@ namespace Unity.FPS.UI
                 Cursor.visible = true;
             }
 
-            if (m_MenuAction.WasPressedThisFrame()
-                || (MenuRoot.activeSelf && m_CancelAction.WasPressedThisFrame()))
-            {
+            if (MenuRoot.activeSelf && m_CancelAction.WasPressedThisFrame())
+             {
                 if (ControlImage.activeSelf)
                 {
                     ControlImage.SetActive(false);
@@ -124,21 +122,19 @@ namespace Unity.FPS.UI
             MenuRoot.SetActive(active);
 
             if (MenuRoot.activeSelf)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                Time.timeScale = 0f;
-                AudioUtility.SetMasterVolume(VolumeWhenMenuOpen);
-
-                EventSystem.current.SetSelectedGameObject(null);
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                Time.timeScale = 1f;
-                AudioUtility.SetMasterVolume(1);
-            }
++            {
++                Cursor.lockState = CursorLockMode.None;
++                Cursor.visible = true;
++                // Do NOT change Time.timeScale or master volume here to avoid pausing the game.
++                EventSystem.current.SetSelectedGameObject(null);
++            }
++            else
++            {
++                Cursor.lockState = CursorLockMode.Locked;
++                Cursor.visible = false;
++                Time.timeScale = 1f;
++                AudioUtility.SetMasterVolume(1);
++            }
 
         }
 
