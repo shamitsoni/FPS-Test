@@ -373,7 +373,7 @@ namespace Unity.FPS.AI
             }
 
             // count a kill
-           global::KillCounter.Instance.AddKill();
+           KillCounter.Instance.AddKill();
 
             // this will call the OnDestroy function
             Destroy(gameObject, DeathDuration);
