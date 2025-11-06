@@ -1,10 +1,6 @@
 {
-    "name": "fps.Game",
+    "name": "fps.Logging",
     "rootNamespace": "",
-    "references": [
-        "GUID:1826c0224c0d048b88112c79bbb0cd85",
-        "GUID:e953dcc5f2e022f4ba8df6f646c5d8b2"
-    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

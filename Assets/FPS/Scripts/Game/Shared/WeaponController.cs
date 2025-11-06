@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using Unity.FPS.Gameplay; // <-- Needed for ShotCounter
 
 namespace Unity.FPS.Game
 {
