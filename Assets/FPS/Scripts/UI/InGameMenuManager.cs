@@ -122,19 +122,19 @@ namespace Unity.FPS.UI
             MenuRoot.SetActive(active);
 
             if (MenuRoot.activeSelf)
-+            {
-+                Cursor.lockState = CursorLockMode.None;
-+                Cursor.visible = true;
-+                // Do NOT change Time.timeScale or master volume here to avoid pausing the game.
-+                EventSystem.current.SetSelectedGameObject(null);
-+            }
-+            else
-+            {
-+                Cursor.lockState = CursorLockMode.Locked;
-+                Cursor.visible = false;
-+                Time.timeScale = 1f;
-+                AudioUtility.SetMasterVolume(1);
-+            }
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                // Do NOT change Time.timeScale or master volume here to avoid pausing the game.
+                EventSystem.current.SetSelectedGameObject(null);
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                Time.timeScale = 1f;
+                AudioUtility.SetMasterVolume(1);
+            }
 
         }
 
