@@ -80,7 +80,7 @@ namespace Unity.FPS.Logging
 
         void WriteFullRow()
         {
-            string logEntry = $"{System.DateTime.Now:HH:mm:ss},{currentKills},{currentDeaths},{currentShots},{currentHits},{currentDamage:F2}\n";
+            string logEntry = $"{System.DateTime.Now:HH:mm:ss.fff},{currentKills},{currentDeaths},{currentShots},{currentHits},{currentDamage:F2}\n";
             File.AppendAllText(logFilePath, logEntry);
         }
 

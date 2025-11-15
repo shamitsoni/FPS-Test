@@ -33,7 +33,7 @@ namespace Unity.FPS.Logging
 
         public void LogSpawn(string type, Vector3 position)
         {
-            string logEntry = $"{System.DateTime.Now:HH:mm:ss},{type},{position.x:F2},{position.y:F2},{position.z:F2}\n";
+            string logEntry = $"{System.DateTime.Now:HH:mm:ss.fff},{type},{position.x:F2},{position.y:F2},{position.z:F2}\n";
             File.AppendAllText(logFilePath, logEntry);
         }
     }
