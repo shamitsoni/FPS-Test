@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Unity.FPS.Game;
+using Unity.FPS.Logging;
 
 public class ZoneSpawner : MonoBehaviour
 {
@@ -44,7 +45,17 @@ public class ZoneSpawner : MonoBehaviour
         if (!enemyPrefab)
             return;
 
+        // Ensure SpawnLogger exists
+        if (Unity.FPS.Logging.SpawnLogger.Instance == null)
+        {
+            GameObject loggerObj = new GameObject("SpawnLogger");
+            loggerObj.AddComponent<Unity.FPS.Logging.SpawnLogger>();
+            DontDestroyOnLoad(loggerObj);
+        }
+
         Vector3 spawnPos = GetRandomSpawnPosition();
+
+        Unity.FPS.Logging.SpawnLogger.Instance?.LogSpawn("Enemy", spawnPos);
 
         GameObject newEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
         currentEnemies++;

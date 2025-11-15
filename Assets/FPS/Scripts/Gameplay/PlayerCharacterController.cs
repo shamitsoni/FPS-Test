@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using Unity.FPS.Logging;
 
 namespace Unity.FPS.Gameplay
 {
@@ -143,6 +144,15 @@ namespace Unity.FPS.Gameplay
 
         void Start()
         {
+            SpawnLogger logger = FindObjectOfType<SpawnLogger>();
+            if (logger == null)
+            {
+                GameObject loggerObj = new GameObject("SpawnLogger");
+                logger = loggerObj.AddComponent<SpawnLogger>();
+                DontDestroyOnLoad(loggerObj);
+            }
+            logger.LogSpawn("Player", transform.position);
+
             // fetch components on the same gameObject
             m_Controller = GetComponent<CharacterController>();
             DebugUtility.HandleErrorIfNullGetComponent<CharacterController, PlayerCharacterController>(m_Controller,
