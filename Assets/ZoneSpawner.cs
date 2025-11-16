@@ -55,7 +55,12 @@ public class ZoneSpawner : MonoBehaviour
 
         Vector3 spawnPos = GetRandomSpawnPosition();
 
-        Unity.FPS.Logging.SpawnLogger.Instance?.LogSpawn("Enemy", spawnPos);
+        // Find player position
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Vector3 playerPos = player ? player.transform.position : Vector3.zero;
+
+        // Log both enemy and player positions
+        Unity.FPS.Logging.SpawnLogger.Instance?.LogEventWithCoords("EnemySpawn", playerPos, spawnPos);
 
         GameObject newEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
         currentEnemies++;

@@ -39,6 +39,8 @@ namespace Unity.FPS.Gameplay
             // Only count hits from the player
             if (shooter != null && shooter.CompareTag("Player"))
             {
+                SpawnLogger.Instance?.LogEventWithCoords("PlayerShot", shooter.transform.position, target.transform.position);
+
                 hitCount++;
                 Debug.Log("Player Hits: " + hitCount);
 

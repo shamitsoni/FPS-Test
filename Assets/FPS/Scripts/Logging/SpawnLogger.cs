@@ -27,13 +27,13 @@ namespace Unity.FPS.Logging
             string folderPath = Path.Combine(desktopPath, "UnityGameLogs");
             Directory.CreateDirectory(folderPath);
 
-            logFilePath = Path.Combine(folderPath, $"SpawnLog_{timestamp}.csv");
-            File.WriteAllText(logFilePath, "Timestamp,Type,Position\n");
+            logFilePath = Path.Combine(folderPath, $"PositionLog_{timestamp}.csv");
+            File.WriteAllText(logFilePath, "Timestamp,Event,PlayerX,PlayerY,PlayerZ,EnemyX,EnemyY,EnemyZ\n");
         }
 
-        public void LogSpawn(string type, Vector3 position)
+        public void LogEventWithCoords(string eventType, Vector3 playerPos, Vector3 enemyPos)
         {
-            string logEntry = $"{System.DateTime.Now:HH:mm:ss.fff},{type},{position.x:F2},{position.y:F2},{position.z:F2}\n";
+            string logEntry = $"{System.DateTime.Now:HH:mm:ss.fff},{eventType},{playerPos.x:F2},{playerPos.y:F2},{playerPos.z:F2},{enemyPos.x:F2},{enemyPos.y:F2},{enemyPos.z:F2}\n";
             File.AppendAllText(logFilePath, logEntry);
         }
     }

@@ -781,9 +781,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976fa8c09606e774f8153f156fd4e6bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JitterSimulator
-  frameInterval: 20
-  minJitterMs: 0
-  maxJitterMs: 0
+  baseFrameInterval: 15
+  maxAdditionalInterval: 10
+  minJitterMs: 30
+  maxJitterMs: 30
+  intervalChangeTime: 2
 --- !u!1001 &841549081
 PrefabInstance:
   m_ObjectHideFlags: 0

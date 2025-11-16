@@ -144,15 +144,6 @@ namespace Unity.FPS.Gameplay
 
         void Start()
         {
-            SpawnLogger logger = FindObjectOfType<SpawnLogger>();
-            if (logger == null)
-            {
-                GameObject loggerObj = new GameObject("SpawnLogger");
-                logger = loggerObj.AddComponent<SpawnLogger>();
-                DontDestroyOnLoad(loggerObj);
-            }
-            logger.LogSpawn("Player", transform.position);
-
             // fetch components on the same gameObject
             m_Controller = GetComponent<CharacterController>();
             DebugUtility.HandleErrorIfNullGetComponent<CharacterController, PlayerCharacterController>(m_Controller,
@@ -509,6 +500,23 @@ namespace Unity.FPS.Gameplay
 
             IsCrouching = crouched;
             return true;
+        }
+
+        GameObject FindNearestEnemy()
+        {
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            GameObject nearest = null;
+            float minDist = float.MaxValue;
+            foreach (GameObject enemy in enemies)
+            {
+                float dist = Vector3.Distance(transform.position, enemy.transform.position);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    nearest = enemy;
+                }
+            }
+            return nearest;
         }
     }
 }
