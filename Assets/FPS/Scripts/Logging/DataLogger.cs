@@ -35,7 +35,7 @@ namespace Unity.FPS.Logging
             string folderPath = Path.Combine(desktopPath, "UnityGameLogs");
             Directory.CreateDirectory(folderPath); // Make sure folder exists
 
-            logFilePath = Path.Combine(folderPath, $"GameSession_{timestamp}.csv");
+            logFilePath = Path.Combine(folderPath, $"DataLog_{timestamp}.csv");
 
             // Write header line (overwrite any existing file for this session)
             File.WriteAllText(logFilePath, "Timestamp,Kills,Deaths,Shots,Hits,Damage,Interrupts\n");
