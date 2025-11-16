@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Threading;
+using Unity.FPS.Logging;
 
 public class JitterSimulator : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class JitterSimulator : MonoBehaviour
 
     private int frameCount = 0;
     private int currentInterval;
+    private int interruptCount = 0;
     private System.Random rand = new System.Random();
 
     void Start()
@@ -38,6 +40,13 @@ public class JitterSimulator : MonoBehaviour
         if (frameCount % currentInterval == 0)
         {
             int jitter = rand.Next(minJitterMs, maxJitterMs);
+            interruptCount++;
+
+            // Log interrupt event to DataLogger
+            if (Unity.FPS.Logging.DataLogger.Instance != null){
+                Unity.FPS.Logging.DataLogger.Instance.LogInterrupt(interruptCount);
+            }
+
             Thread.Sleep(jitter); // Simulate frame stutter
             SetRandomInterval();  // Pick a new random interval for next time
         }

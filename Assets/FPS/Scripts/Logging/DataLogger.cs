@@ -11,7 +11,8 @@ namespace Unity.FPS.Logging
         int currentKills = 0;
         int currentDeaths = 0;
         int currentShots = 0;
-        int currentHits = 0;         
+        int currentHits = 0;
+        int currentInterrupts = 0;         
         float currentDamage = 0f;    
 
         void Awake()
@@ -37,7 +38,7 @@ namespace Unity.FPS.Logging
             logFilePath = Path.Combine(folderPath, $"GameSession_{timestamp}.csv");
 
             // Write header line (overwrite any existing file for this session)
-            File.WriteAllText(logFilePath, "Timestamp,Kills,Deaths,Shots,Hits,Damage\n"); // include Hits and Damage
+            File.WriteAllText(logFilePath, "Timestamp,Kills,Deaths,Shots,Hits,Damage,Interrupts\n");
             Debug.Log($"[DataLogger] Logging to: {logFilePath}");
         }
 
@@ -78,9 +79,15 @@ namespace Unity.FPS.Logging
             Debug.Log($"[DataLogger] Stats logged: Kills={currentKills}, Deaths={currentDeaths}, Shots={currentShots}, Hits={currentHits}, Damage={currentDamage:F2}");
         }
 
+        public void LogInterrupt(int interruptCount)
+        {
+            currentInterrupts = interruptCount;
+            WriteFullRow();
+        }
+
         void WriteFullRow()
         {
-            string logEntry = $"{System.DateTime.Now:HH:mm:ss.fff},{currentKills},{currentDeaths},{currentShots},{currentHits},{currentDamage:F2}\n";
+            string logEntry = $"{System.DateTime.Now:HH:mm:ss.fff},{currentKills},{currentDeaths},{currentShots},{currentHits},{currentDamage:F2},{currentInterrupts}\n";
             File.AppendAllText(logFilePath, logEntry);
         }
 
@@ -88,5 +95,7 @@ namespace Unity.FPS.Logging
         {
             File.AppendAllText(logFilePath, $"SUMMARY: {summary}\n");
         }
+
+        
     }
 }
