@@ -24,7 +24,7 @@ namespace Unity.FPS.Logging
 
             string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
             string desktopPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
-            string folderPath = Path.Combine(desktopPath, "UnityGameLogs");
+            string folderPath = Path.Combine(desktopPath, "UnityGameLogs", "Positions");
             Directory.CreateDirectory(folderPath);
 
             logFilePath = Path.Combine(folderPath, $"PositionLog_{timestamp}.csv");

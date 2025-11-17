@@ -32,7 +32,7 @@ namespace Unity.FPS.Logging
             // Create a persistent log file path (unique per session)
             string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
             string desktopPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
-            string folderPath = Path.Combine(desktopPath, "UnityGameLogs");
+            string folderPath = Path.Combine(desktopPath, "UnityGameLogs", "Stats");
             Directory.CreateDirectory(folderPath); // Make sure folder exists
 
             logFilePath = Path.Combine(folderPath, $"DataLog_{timestamp}.csv");
